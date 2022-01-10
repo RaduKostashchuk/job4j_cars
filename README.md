@@ -1,25 +1,7 @@
-# job4j_todo
+# job4j_cars
 
-It is task tracking application.
+It is application for car sale enterprise.
 
-User can create task by giving task description and category.
+There are cars, engines, owners entities in the database
 
-Task status can be changed later by checkbox.
-
-There is a filter for displaying only running tasks.
-
-Login page.
-
-![ScreenShot](images/login.png)
-
-Registration page.
-
-![ScreenShot](images/reg.png)
-
-Screen with all tasks.
-
-![ScreenShot](images/all.png)
-
-Screen with running tasks.
-
-![ScreenShot](images/running.png)
+that can be viewed, updated or deleted.
