@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Engine {
+public class Body {
     @Id
     @GeneratedValue
     private int id;
@@ -37,8 +37,8 @@ public class Engine {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Engine engine = (Engine) o;
-        return Objects.equals(id, engine.id);
+        Body body = (Body) o;
+        return Objects.equals(id, body.id);
     }
 
     @Override

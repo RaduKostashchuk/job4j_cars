@@ -1,0 +1,2 @@
+fillTable();
+placeImage();

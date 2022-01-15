@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://127.0.0.1:5432/cars2</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://127.0.0.1:5432/carsale</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">password</property>
         <property name="hibernate.connection.pool_size">5</property>
@@ -17,9 +17,12 @@
         <property name="format_sql">true</property>
         <property name="use_sql_comments">true</property>
 
-
-        <mapping class="ru.job4j.cars.models.Engine" />
         <mapping class="ru.job4j.cars.models.Car" />
+        <mapping class="ru.job4j.cars.models.Body" />
+        <mapping class="ru.job4j.cars.models.Brand" />
+        <mapping class="ru.job4j.cars.models.Model" />
+        <mapping class="ru.job4j.cars.models.Engine" />
         <mapping class="ru.job4j.cars.models.Driver" />
+        <mapping class="ru.job4j.cars.models.Advertisement" />
     </session-factory>
 </hibernate-configuration>

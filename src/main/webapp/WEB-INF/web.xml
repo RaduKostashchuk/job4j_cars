@@ -1,7 +1,164 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<web-app
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+        version="3.0">
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+  <display-name>Car sale enterprise</display-name>
+
+  <context-param>
+    <param-name>imageFolder</param-name>
+    <param-value>c:\images\carsale</param-value>
+  </context-param>
+
+  <servlet>
+    <servlet-name>RegServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.RegServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>AuthServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.AuthServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.LogoutServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>GetAllBodiesServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.GetAllBodiesServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>GetAllEnginesServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.GetAllEnginesServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>GetAllBrandsServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.GetAllBrandsServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>GetBrandModelsServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.GetBrandModelsServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>GetAllAdvertisementsServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.GetAllAdvertisementsServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>AddAdvertisementServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.AddAdvertisementServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>DownloadServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.DownloadServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.UploadServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>GetAdvertisementByIdServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.GetAdvertisementByIdServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>EditAdvertisementServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.EditAdvertisementServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>DeleteAdvertisementServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.DeleteAdvertisementServlet</servlet-class>
+  </servlet>
+
+  <filter>
+    <filter-name>AuthFilter</filter-name>
+    <filter-class>ru.job4j.cars.servlet.AuthFilter</filter-class>
+  </filter>
+
+  <servlet-mapping>
+    <servlet-name>RegServlet</servlet-name>
+    <url-pattern>/reg</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>AuthServlet</servlet-name>
+    <url-pattern>/auth</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>GetAllBodiesServlet</servlet-name>
+    <url-pattern>/bodies</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>GetAllEnginesServlet</servlet-name>
+    <url-pattern>/engines</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>GetAllBrandsServlet</servlet-name>
+    <url-pattern>/brands</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>GetBrandModelsServlet</servlet-name>
+    <url-pattern>/models</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>GetAllAdvertisementsServlet</servlet-name>
+    <url-pattern>/advertisements</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>AddAdvertisementServlet</servlet-name>
+    <url-pattern>/add</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>DownloadServlet</servlet-name>
+    <url-pattern>/download</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/upload</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>GetAdvertisementByIdServlet</servlet-name>
+    <url-pattern>/advertisement</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>EditAdvertisementServlet</servlet-name>
+    <url-pattern>/edit</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>DeleteAdvertisementServlet</servlet-name>
+    <url-pattern>/delete</url-pattern>
+  </servlet-mapping>
+
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
 </web-app>

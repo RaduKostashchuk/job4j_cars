@@ -6,27 +6,27 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Engine {
+public class Brand {
     @Id
     @GeneratedValue
     private int id;
 
-    private String type;
+    private String name;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -37,8 +37,8 @@ public class Engine {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Engine engine = (Engine) o;
-        return Objects.equals(id, engine.id);
+        Brand brand = (Brand) o;
+        return id == brand.id;
     }
 
     @Override

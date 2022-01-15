@@ -1,17 +1,18 @@
 package ru.job4j.cars.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Engine {
+public class Model {
     @Id
     @GeneratedValue
     private int id;
 
-    private String type;
+    private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Brand brand;
 
     public Integer getId() {
         return id;
@@ -21,12 +22,20 @@ public class Engine {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
     @Override
@@ -37,8 +46,8 @@ public class Engine {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Engine engine = (Engine) o;
-        return Objects.equals(id, engine.id);
+        Model model = (Model) o;
+        return Objects.equals(id, model.id);
     }
 
     @Override
