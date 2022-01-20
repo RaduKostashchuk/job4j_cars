@@ -15,6 +15,9 @@ function validate() {
     const modelId = parseInt($('#modelSelect').val(), 10);
     const bodyId = parseInt($('#bodySelect').val(), 10);
     const engineId = parseInt($('#engineSelect').val(), 10);
+    const drivetrainId = parseInt($('#dtSelect').val(), 10);
+    const year = $('#yearInput').val();
+    const mileage = $('#mileageInput').val();
     let alertMessage = "";
     if (brandId === 0) {
         alertMessage = "Необходимо выбрать марку\n";
@@ -26,7 +29,16 @@ function validate() {
         alertMessage += "Необходимо выбрать тип кузова\n";
     }
     if (engineId === 0) {
-        alertMessage += "Необходимо выбрать тип двигателя";
+        alertMessage += "Необходимо выбрать тип двигателя\n";
+    }
+    if (drivetrainId === 0) {
+        alertMessage += "Необходимо указать привод\n";
+    }
+    if (year === "") {
+        alertMessage += "Необходимо указать год\n";
+    }
+    if (mileage === "") {
+        alertMessage += "Необходимо указать пробег";
     }
     if (alertMessage !== "") {
         alert(alertMessage);
@@ -60,15 +72,15 @@ function getEngines() {
         })
     });
 }
-function getBrands() {
+function getDrivetrains() {
     $(document).ready(function () {
         $.ajax({
             type: 'GET',
-            url: context + '/brands',
+            url: context + '/drivetrains',
             dataType: 'json'
         }).done(function (data) {
-            for (let brand of data) {
-                $('#brandSelect option:last').after(`<option value=${brand.id}>${brand.name}</option>`)
+            for (let drivetrain of data) {
+                $('#dtSelect option:last').after(`<option value=${drivetrain.id}>${drivetrain.type}</option>`)
             }
         })
     });
@@ -114,3 +126,4 @@ if (getAdvId() !== -1) {
 getBodies();
 getEngines();
 getBrands();
+getDrivetrains();

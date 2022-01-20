@@ -7,24 +7,45 @@ import com.google.gson.GsonBuilder;
 import ru.job4j.cars.models.Advertisement;
 import ru.job4j.cars.models.Car;
 import ru.job4j.cars.models.Driver;
-import ru.job4j.cars.store.HbmStore;
+import ru.job4j.cars.store.AdvertisementStore;
+import ru.job4j.cars.store.Filter;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
 
 public class GetAllAdvertisementsServlet extends HttpServlet {
+    private final Map<Filter.Type, BiFunction<String, List<Advertisement>, List<Advertisement>>> dispatcher = new HashMap<>();
+
+    @Override
+    public void init() throws ServletException {
+        dispatcher.put(Filter.Type.BRAND, Filter::getAdvertisementByBrandName);
+        dispatcher.put(Filter.Type.LAST_DAY, Filter::getLastDayAdvertisements);
+        dispatcher.put(Filter.Type.PHOTO, Filter::getAdvertisementWithPhoto);
+        super.init();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Gson gson = new GsonBuilder()
                 .addSerializationExclusionStrategy(getStrategy())
                 .create();
-        List<Advertisement> advertisements = HbmStore.getInstance().getAllAdvertisements();
+        String withPhoto = req.getParameter("photo");
+        String lastDay = req.getParameter("lastDay");
+        String brand = req.getParameter("brand");
+        Map<Filter.Type, String> filters = Filter.of(brand, withPhoto, lastDay);
+        List<Advertisement> advertisements = AdvertisementStore.getAllAdvertisements();
+        for (Filter.Type fType : filters.keySet()) {
+            advertisements = dispatcher.get(fType).apply(filters.get(fType), advertisements);
+        }
         String json = gson.toJson(advertisements);
         OutputStream out = resp.getOutputStream();
         out.write(json.getBytes(StandardCharsets.UTF_8));
@@ -36,9 +57,6 @@ public class GetAllAdvertisementsServlet extends HttpServlet {
         return new ExclusionStrategy() {
             @Override
             public boolean shouldSkipField(FieldAttributes field) {
-                if (field.getDeclaringClass() == Advertisement.class && field.getName().equals("description")) {
-                    return true;
-                }
                 if (field.getDeclaringClass() == Car.class && field.getName().equals("drivers")) {
                     return true;
                 }

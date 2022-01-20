@@ -11,6 +11,15 @@ public class Car {
     @GeneratedValue
     private int id;
 
+    @Column(nullable = false)
+    private int year;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Drivetrain drivetrain;
+
+    @Column(nullable = false)
+    private int mileage;
+
     @OneToOne(fetch = FetchType.LAZY)
     private Engine engine;
 
@@ -29,12 +38,15 @@ public class Car {
             inverseJoinColumns = {@JoinColumn(name = "driver_id", nullable = false, updatable = false)})
     private Set<Driver> drivers = new HashSet<>();
 
-    public static Car of(Brand brand, Model model, Body body, Engine engine) {
+    public static Car of(Brand brand, Model model, Body body, Engine engine, int year, int mileage, Drivetrain drivetrain) {
         Car car = new Car();
         car.brand = brand;
         car.model = model;
         car.body = body;
         car.engine = engine;
+        car.year = year;
+        car.mileage = mileage;
+        car.drivetrain = drivetrain;
         return car;
     }
 
@@ -91,6 +103,30 @@ public class Car {
         drivers.add(driver);
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public Drivetrain getDrivetrain() {
+        return drivetrain;
+    }
+
+    public void setDrivetrain(Drivetrain drivetrain) {
+        this.drivetrain = drivetrain;
+    }
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -112,6 +148,9 @@ public class Car {
     public String toString() {
         return "Car{"
                 + "id=" + id
+                + ", year=" + year
+                + ", drivetrain=" + drivetrain
+                + ", mileage=" + mileage
                 + ", engine=" + engine
                 + ", body=" + body
                 + ", brand=" + brand

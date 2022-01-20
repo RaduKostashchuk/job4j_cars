@@ -4,6 +4,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import ru.job4j.cars.config.Config;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +19,8 @@ public class UploadServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        File imageFolder = new File(getServletContext().getInitParameter("imageFolder"));
+        Config config = new Config();
+        File imageFolder = new File(config.get("cars.image_folder"));
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletContext context = this.getServletConfig().getServletContext();
         File repository = (File) context.getAttribute("javax.servlet.context.tempdir");

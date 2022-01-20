@@ -3,7 +3,7 @@ package ru.job4j.cars.servlet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.job4j.cars.models.Engine;
-import ru.job4j.cars.store.HbmStore;
+import ru.job4j.cars.store.EngineStore;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ public class GetAllEnginesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        List<Engine> engines = HbmStore.getInstance().getAllEngines();
+        List<Engine> engines = EngineStore.getAllEngines();
         String json = GSON.toJson(engines);
         OutputStream out = resp.getOutputStream();
         out.write(json.getBytes(StandardCharsets.UTF_8));

@@ -36,7 +36,11 @@
                         </c:if>
                         <div class="form-group m-1">
                             <label>Почта</label>
-                            <input type="text" class="form-control" id="emailInput" name="email">
+                            <input type="email" class="form-control" id="emailInput" name="email">
+                        </div>
+                        <div class="form-group m-1">
+                            <label>Телефон</label>
+                            <input type="tel" class="form-control" id="phoneInput" name="phone">
                         </div>
                         <div class="form-group m-1">
                             <label>Имя</label>

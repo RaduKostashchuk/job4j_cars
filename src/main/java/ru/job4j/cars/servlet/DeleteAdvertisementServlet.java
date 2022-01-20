@@ -1,7 +1,8 @@
 package ru.job4j.cars.servlet;
 
+import ru.job4j.cars.config.Config;
 import ru.job4j.cars.models.Advertisement;
-import ru.job4j.cars.store.HbmStore;
+import ru.job4j.cars.store.AdvertisementStore;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,11 +15,12 @@ public class DeleteAdvertisementServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int advId = Integer.parseInt(req.getParameter("advId"));
         int driverIdFromFront = Integer.parseInt(req.getParameter("driverId"));
-        Advertisement advertisement = HbmStore.getInstance().getAdvertisementById(advId);
+        Advertisement advertisement = AdvertisementStore.getAdvertisementById(advId);
         int driverIdFromBack = advertisement.getDriver().getId();
         if (driverIdFromFront == driverIdFromBack) {
-            HbmStore.getInstance().deleteAdvertisement(advertisement);
-            File imageFolder = new File(getServletContext().getInitParameter("imageFolder"));
+            AdvertisementStore.deleteAdvertisement(advertisement);
+            Config config = new Config();
+            File imageFolder = new File(config.get("cars.image_folder"));
             for (File file : imageFolder.listFiles()) {
                 if (file.getName().matches(advId + "\\..+")) {
                     file.delete();

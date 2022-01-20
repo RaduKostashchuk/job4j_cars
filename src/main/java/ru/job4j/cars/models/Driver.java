@@ -13,13 +13,16 @@ public class Driver {
     private String name;
     @Column(unique = true, nullable = false)
     private String email;
+    @Column(unique = true, nullable = false)
+    private String phone;
     @Column(nullable = false)
     private String password;
 
-    public static Driver of(String name, String email, String password) {
+    public static Driver of(String name, String email, String phone, String password) {
         Driver driver = new Driver();
         driver.name = name;
         driver.email = email;
+        driver.phone = phone;
         driver.password = password;
         return driver;
     }
@@ -46,6 +49,14 @@ public class Driver {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
@@ -79,6 +90,7 @@ public class Driver {
                 + "id=" + id
                 + ", name='" + name + '\''
                 + ", email='" + email + '\''
+                + ", phone='" + phone + '\''
                 + ", password='" + password + '\''
                 + '}';
     }

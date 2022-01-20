@@ -3,6 +3,7 @@ package ru.job4j.cars.servlet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.job4j.cars.models.Body;
+import ru.job4j.cars.store.BodyStore;
 import ru.job4j.cars.store.HbmStore;
 
 import javax.servlet.http.HttpServlet;
@@ -18,7 +19,7 @@ public class GetAllBodiesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        List<Body> bodies = HbmStore.getInstance().getAllBodies();
+        List<Body> bodies = BodyStore.getAllBodies();
         String json = GSON.toJson(bodies);
         OutputStream out = resp.getOutputStream();
         out.write(json.getBytes(StandardCharsets.UTF_8));

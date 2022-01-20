@@ -1,5 +1,7 @@
 package ru.job4j.cars.servlet;
 
+import ru.job4j.cars.config.Config;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +14,8 @@ public class DownloadServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String imageFolder = getServletContext().getInitParameter("imageFolder");
+        Config config = new Config();
+        String imageFolder = config.get("cars.image_folder");
         File photo = null;
         String name  = req.getParameter("id");
         if (name != null) {

@@ -23,53 +23,41 @@
             + "<%=request.getServletContext().getContextPath()%>"
     </script>
     <script src="js/lib.js?version=5"></script>
-    <script src="js/edit.js?version=22"></script>
+    <script src="js/edit.js?version=2"></script>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-2">
-            <ul class="nav justify-content-start">
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>">
-                        На главную
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-3 offset-7">
-            <ul class="nav justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/logout">
-                        <c:out value="${driver.name}"/> | Выйти
-                    </a>
-                </li>
-            </ul>
+    <div class="my-navbar bg-info">
+        <div class="row">
+            <div class="col-4">
+                <p class="h5 text-center m-2">Autosale.ru</p>
+            </div>
+            <div class="col-2 offset-2">
+                <a class="btn btn-primary my-1" href="<%=request.getContextPath()%>">
+                    На главную
+                </a>
+            </div>
+            <div class="col-2">
+                <a class="btn btn-primary my-1" href="<%=request.getContextPath()%>/edit.jsp">
+                    Добавить объявление
+                </a>
+            </div>
+            <div class="col-2">
+                <a class="btn btn-primary my-1" href="<%=request.getContextPath()%>/logout">
+                    <c:out value="${driver.name}"/> | Выйти
+                </a>
+            </div>
         </div>
     </div>
-
     <div class="card">
         <div class="card-header">
-            <p class="h5">
+            <p class="h6">
                 <c:if test="${param.id != null}">
-                <div class="row">
-                    <div class="col-4">
-                        <p class="h5">Редактировать объявление</p>
-                    </div>
-                    <div class="col-3 offset-5">
-                        <form action="<c:url value='/delete'/>" method="post" id="deleteForm">
-                            <input type="hidden" name="advId" value="<c:out value='${param.id}'/>">
-                            <input type="hidden" name="driverId" value="<c:out value='${driver.id}'/>">
-                            <div class="col p-2">
-                                <button type="submit" class="btn btn-warning">Удалить объявление</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                    Редактировать объявление
                 </c:if>
                 <c:if test="${param.id == null}">
                     Новое объявление
                 </c:if>
+            </p>
         </div>
         <div class="card-body form-group">
             <c:if test="${param.id != null}">
@@ -83,7 +71,7 @@
                         <p class="h6 m-1 fw-bold">Информация о машине</p>
                         <div class="form-floating">
                             <textarea class="form-control m-1" id="descriptionInput" name="description"
-                                      style="height: 100px" placeholder="Описание"></textarea>
+                                      style="height: 150px" placeholder="Описание"></textarea>
                         </div>
                     </div>
                     <div class="col">
@@ -97,6 +85,10 @@
                                 <select class="custom-select" id="modelSelect" name="model">
                                     <option value="0" selected>Модель</option>
                                 </select>
+                            </div>
+                            <div class="col p-2">
+                                <label for="priceInput" class="form-text-label">Цена</label>
+                                <input type="number" min="0" max="10000000" id="priceInput" size="8" class="form-text-input" name="price">
                             </div>
                             <div class="col p-2">
                                 <select class="custom-select" id="bodySelect" name="body">
@@ -113,31 +105,59 @@
                                 <input type="checkbox" id="soldCheckbox" class="form-check-input" name="sold">
                             </div>
                             <div class="col p-2">
+                                <select class="custom-select" id="dtSelect" name="drivetrain">
+                                    <option value="0" selected>Привод</option>
+                                </select>
+                            </div>
+                            <div class="col p-2">
+                                <label for="yearInput" class="form-text-label">Год</label>
+                                <input type="number" min="1980" max="2022" id="yearInput" size="5" class="form-text-input" name="year">
+                            </div>
+                            <div class="col p-2">
+                                <label for="mileageInput" class="form-text-label">Пробег</label>
+                                <input type="number" min="0" max="999999" id="mileageInput" size="7" class="form-text-input" name="mileage">
+                            </div>
+                            <div class="col p-2">
                                 <button type="submit" class="btn btn-primary">Сохранить</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-            <form action="<c:url value='/upload?id=${param.id}'/>" method="post"
-                  enctype="multipart/form-data" onsubmit="return validatePhoto()">
-                <div class="row border m-1">
-                    <p class="h6 m-1 fw-bold">Загрузка фотографии</p>
-                    <div class="col-2 m-1">
-                        <label for="filename" class="btn btn-primary">Выбрать фото</label>
-                        <input type="file" name="file" id="filename" style="visibility:hidden;">
+                <div class="row">
+                    <div class="col-6">
+                        <form action="<c:url value='/upload?id=${param.id}'/>" method="post"
+                              enctype="multipart/form-data" onsubmit="return validatePhoto()">
+                            <div class="row border m-1">
+                                <p class="h6 m-1 fw-bold">Загрузка фотографии</p>
+                                <div class="col-4 m-1">
+                                    <label for="filename" class="btn btn-primary">Выбрать фото</label>
+                                    <input type="file" name="file" id="filename" style="visibility:hidden;">
+                                </div>
+                                <div class="col-4 m-1">
+                                    <button type="submit" class="btn btn-primary">Загрузить фото</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-2 m-1">
-                        <button type="submit" class="btn btn-primary">Загрузить фото</button>
+                    <c:if test="${param.id != null}">
+                    <div class="col-4">
+                        <form action="<c:url value='/delete'/>" method="post" id="deleteForm">
+                            <input type="hidden" name="advId" value="<c:out value='${param.id}'/>">
+                            <input type="hidden" name="driverId" value="<c:out value='${driver.id}'/>">
+                            <div class="col p-2">
+                                <button type="submit" class="btn btn-warning">Удалить объявление</button>
+                            </div>
+                        </form>
                     </div>
+                    </c:if>
                 </div>
-            </form>
         </div>
     </div>
     <c:if test="${param.id != null}">
     <div class="card">
         <div class="card-header">
-            <p class="h5">Просмотр объявленния</p>
+            <p class="h6">Просмотр объявленния</p>
         </div>
         <div class="card-body">
             <div class="row">
@@ -158,12 +178,28 @@
                             <td id="model"></td>
                         </tr>
                         <tr>
+                            <th class="table-light">Год</th>
+                            <td id="year"></td>
+                        </tr>
+                        <tr>
+                            <th class="table-light">Цена</th>
+                            <td id="price"></td>
+                        </tr>
+                        <tr>
+                            <th class="table-light">Пробег</th>
+                            <td id="mileage"></td>
+                        </tr>
+                        <tr>
                             <th class="table-light">Кузов</th>
                             <td id="body"></td>
                         </tr>
                         <tr>
                             <th class="table-light">Двигатель</th>
                             <td id="engine"></td>
+                        </tr>
+                        <tr>
+                            <th class="table-light">Привод</th>
+                            <td id="drivetrain"></td>
                         </tr>
                         <tr>
                             <th class="table-light">Опубликовано</th>
@@ -179,22 +215,40 @@
                 <div class="col-6" id="image"></div>
             </div>
             <div class="row">
-                <table class="table table-bordered m-1">
-                    <thead class="table-light">
-                    <tr>
-                        <th colspan="2" class="text-center">Описание</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><p id="description" class="m-1"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="col-8">
+                    <table class="table table-bordered m-1">
+                        <thead class="table-light">
+                        <tr>
+                            <th colspan="2" class="text-center">Описание</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><p id="description" class="m-1"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-4">
+                    <table class="table table-bordered m-1">
+                        <thead class="table-light">
+                        <tr>
+                            <th colspan="2" class="text-center">Продавец</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><p id="ownerName" class="m-1"></td>
+                        </tr>
+                        <tr>
+                            <td><p id="ownerPhone" class="m-1"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
     </c:if>
-</div>
 </body>
 </html>

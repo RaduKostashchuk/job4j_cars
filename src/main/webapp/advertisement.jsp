@@ -22,102 +22,132 @@
             + ":" + "<%=request.getServerPort()%>"
             + "<%=request.getServletContext().getContextPath()%>"
     </script>
-    <script src="js/lib.js?version=5"></script>
-    <script src="js/advertisement.js?version=17"></script>
+    <script src="js/lib.js?version=7"></script>
+    <script src="js/advertisement.js?version=7"></script>
 </head>
 <body>
-<div class="container">
+<div class="my-navbar bg-info">
     <div class="row">
-            <div class="col-2">
-                <ul class="nav justify-content-start">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=request.getContextPath()%>">
-                            На главную
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        <div class="col-4">
+            <p class="h5 text-center m-2">Autosale.ru</p>
+        </div>
+        <div class="col-2 offset-2">
+            <a class="btn btn-primary m-1" href="<%=request.getContextPath()%>">
+                На главную
+            </a>
+        </div>
         <c:if test="${driver != null}">
-            <div class="col-3 offset-7">
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=request.getContextPath()%>/logout">
-                            <c:out value="${driver.name}"/> | Выйти
-                        </a>
-                    </li>
-                </ul>
+            <div class="col-2">
+                <a class="btn btn-primary m-1" href="<%=request.getContextPath()%>/edit.jsp">
+                    Добавить объявление
+                </a>
+            </div>
+            <div class="col-2">
+                <a class="btn btn-primary m-1" href="<%=request.getContextPath()%>/logout">
+                    <c:out value="${driver.name}"/> | Выйти
+                </a>
             </div>
         </c:if>
         <c:if test="${driver == null}">
-            <div class="col-2 offset-8">
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">
-                            Войти
-                        </a>
-                    </li>
-                </ul>
+            <div class="col-2">
+                <a class="btn btn-primary disabled m-1" href="<%=request.getContextPath()%>/edit.jsp" >
+                    Добавить объявление
+                </a>
+            </div>
+            <div class="col-2">
+                <a class="btn btn-primary m-1" href="<%=request.getContextPath()%>/login.jsp">
+                    Войти
+                </a>
             </div>
         </c:if>
     </div>
-
-    <div class="card">
-        <div class="card-header">
-            <p class="h5">Просмотр объявленния</p>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <table class="table table-bordered m-1">
+                <thead class="table-light">
+                <tr>
+                    <th colspan="2" class="text-center">Характеристики</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th class="table-light">Марка</th>
+                    <td id="brand"></td>
+                </tr>
+                <tr>
+                    <th class="table-light">Модель</th>
+                    <td id="model"></td>
+                </tr>
+                <tr>
+                    <th class="table-light">Год</th>
+                    <td id="year"></td>
+                </tr>
+                <tr>
+                    <th class="table-light">Цена</th>
+                    <td id="price"></td>
+                </tr>
+                <tr>
+                    <th class="table-light">Пробег</th>
+                    <td id="mileage"></td>
+                </tr>
+                <tr>
+                    <th class="table-light">Кузов</th>
+                    <td id="body"></td>
+                </tr>
+                <tr>
+                    <th class="table-light">Двигатель</th>
+                    <td id="engine"></td>
+                </tr>
+                <tr>
+                    <th class="table-light">Привод</th>
+                    <td id="drivetrain"></td>
+                </tr>
+                <tr>
+                    <th class="table-light">Опубликовано</th>
+                    <td id="created"></td>
+                </tr>
+                <tr>
+                    <th class="table-light">Статус</th>
+                    <td id="sold"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-4">
-                    <table class="table table-bordered m-1">
-                        <thead class="table-light">
-                        <tr>
-                            <th colspan="2" class="text-center">Характеристики</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th class="table-light">Марка</th>
-                            <td id="brand"></td>
-                        </tr>
-                        <tr>
-                            <th class="table-light">Модель</th>
-                            <td id="model"></td>
-                        </tr>
-                        <tr>
-                            <th class="table-light">Кузов</th>
-                            <td id="body"></td>
-                        </tr>
-                        <tr>
-                            <th class="table-light">Двигатель</th>
-                            <td id="engine"></td>
-                        </tr>
-                        <tr>
-                            <th class="table-light">Опубликовано</th>
-                            <td id="created"></td>
-                        </tr>
-                        <tr>
-                            <th class="table-light">Статус</th>
-                            <td id="sold"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-6" id="image"></div>
-            </div>
-            <div class="row">
-                <table class="table table-bordered m-1">
-                    <thead class="table-light">
-                    <tr>
-                        <th colspan="2" class="text-center">Описание</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><p id="description" class="m-1"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="col-6" id="image"></div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <table class="table table-bordered m-1">
+                <thead class="table-light">
+                <tr>
+                    <th colspan="2" class="text-center">Описание</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><p id="description" class="m-1"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-4">
+            <table class="table table-bordered m-1">
+                <thead class="table-light">
+                <tr>
+                    <th colspan="2" class="text-center">Продавец</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><p id="ownerName" class="m-1"></td>
+                </tr>
+                <tr>
+                    <td><p id="ownerPhone" class="m-1"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

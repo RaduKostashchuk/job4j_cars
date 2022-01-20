@@ -16,6 +16,8 @@ public class Advertisement {
 
     private String description;
 
+    private int price;
+
     private boolean sold;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,19 +26,20 @@ public class Advertisement {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Car car;
 
-    public static Advertisement of(String description, Driver driver, Car car) {
+    public static Advertisement of(String description, Driver driver, Car car, int price) {
         Advertisement advertisement = new Advertisement();
         advertisement.description = description;
         advertisement.driver = driver;
         advertisement.car = car;
+        advertisement.price = price;
         return advertisement;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -54,6 +57,14 @@ public class Advertisement {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public boolean isSold() {
@@ -103,6 +114,7 @@ public class Advertisement {
                 + "id=" + id
                 + ", created=" + created
                 + ", description='" + description + '\''
+                + ", price=" + price
                 + ", sold=" + sold
                 + ", driver=" + driver
                 + ", car=" + car

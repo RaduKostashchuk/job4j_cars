@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 import ru.job4j.cars.models.Advertisement;
 import ru.job4j.cars.models.Car;
 import ru.job4j.cars.models.Driver;
-import ru.job4j.cars.store.HbmStore;
+import ru.job4j.cars.store.AdvertisementStore;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +24,7 @@ public class GetAdvertisementByIdServlet extends HttpServlet {
                 .addSerializationExclusionStrategy(getStrategy())
                 .create();
         int id = Integer.parseInt(req.getParameter("id"));
-        Advertisement advertisement = HbmStore.getInstance().getAdvertisementById(id);
+        Advertisement advertisement = AdvertisementStore.getAdvertisementById(id);
         String json = gson.toJson(advertisement);
         OutputStream out = resp.getOutputStream();
         out.write(json.getBytes(StandardCharsets.UTF_8));
@@ -36,7 +36,8 @@ public class GetAdvertisementByIdServlet extends HttpServlet {
         return new ExclusionStrategy() {
             @Override
             public boolean shouldSkipField(FieldAttributes field) {
-                if (field.getDeclaringClass() == Driver.class && !field.getName().equals("id")) {
+                if (field.getDeclaringClass() == Driver.class
+                        && (field.getName().equals("password") || field.getName().equals("email"))) {
                     return true;
                 }
                 if (field.getDeclaringClass() == Car.class && field.getName().equals("drivers")) {

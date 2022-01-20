@@ -22,6 +22,7 @@
         <mapping class="ru.job4j.cars.models.Brand" />
         <mapping class="ru.job4j.cars.models.Model" />
         <mapping class="ru.job4j.cars.models.Engine" />
+        <mapping class="ru.job4j.cars.models.Drivetrain" />
         <mapping class="ru.job4j.cars.models.Driver" />
         <mapping class="ru.job4j.cars.models.Advertisement" />
     </session-factory>

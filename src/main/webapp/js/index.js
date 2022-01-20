@@ -1,15 +1,25 @@
-function getAdvertisements() {
-    return $.ajax({
-        type: 'GET',
-        url: context + '/advertisements',
-        dataType: 'json'
-    })
+function getAdvertisements(photo, lastDay, brand) {
+        return $.ajax({
+            type: 'GET',
+            url: context + '/advertisements?' + 'brand=' + brand + '&'
+                + (photo ? 'photo=true&' : '') + (lastDay ? 'lastDay=true&' : ''),
+            dataType: 'json'
+        })
 }
 function compare(a, b) {
     return a.created.localeCompare(b.created);
 }
-function drawTable() {
-    window.onload = getAdvertisements().done(function (data) {
+function queryBack() {
+    $(document).ready(function () {
+        let brand =$("#brandSelect option:selected").text();
+        let photoCheckBox = document.getElementById("photoCheck");
+        let lastCheckBox = document.getElementById("lastDayCheck");
+        getAdvertisements(photoCheckBox.checked,  lastCheckBox.checked, brand).done(function (data) {
+                    drawTable(data)
+        });
+    })
+}
+function drawTable(data) {
         let allCheckBox = document.getElementById("allCheck");
         let myCheckBox = document.getElementById("myCheck");
         data.sort(compare);
@@ -37,13 +47,19 @@ function drawTable() {
                 a.href = context + '/edit.jsp?id=' + advertisement.id;
             }
             img.src = context + '/download?id=' + advertisement.id;
-            img.width = 120;
+            img.width = 200;
             img.alt = advertisement.car.brand.name + ' ' + advertisement.car.model.name;
             a.append(img);
             td1.append(a);
-            td2.innerText = advertisement.car.brand.name;
-            td3.innerText = advertisement.car.model.name;
-            td4.innerHTML = '<h5><span class="badge rounded-pill bg-success text-dark">В продаже</span></h5>';
+            td2.innerHTML = '<p class="fw-bold">' + advertisement.car.brand.name
+                + ' ' + advertisement.car.model.name
+                + ' ' + advertisement.car.year + '</p>'
+                + '<p>' + advertisement.car.mileage + ' т.км.,'
+                + ' ' + advertisement.car.engine.type + ','
+                + ' ' + advertisement.car.drivetrain.type + '</p>';
+            td3.innerHTML = '<p>' + advertisement.description + '</p>'
+            td4.innerHTML = '<p class="h4">' + advertisement.price + '</p>'
+                + '<h5><span class="badge rounded-pill bg-success text-dark">В продаже</span></h5>';
             if (advertisement.sold) {
                 td4.innerHTML = '<h5><span class="badge rounded-pill bg-warning text-dark">Продана</span></h5>';
             }
@@ -53,8 +69,8 @@ function drawTable() {
             tr.append(td4);
             tbody.append(tr);
         }
-    })
 }
-drawTable();
-setInterval(drawTable, 30000);
+getBrands();
+queryBack();
+setInterval(queryBack, 30000);
 

@@ -6,11 +6,6 @@
 
   <display-name>Car sale enterprise</display-name>
 
-  <context-param>
-    <param-name>imageFolder</param-name>
-    <param-value>c:\images\carsale</param-value>
-  </context-param>
-
   <servlet>
     <servlet-name>RegServlet</servlet-name>
     <servlet-class>ru.job4j.cars.servlet.RegServlet</servlet-class>
@@ -34,6 +29,11 @@
   <servlet>
     <servlet-name>GetAllEnginesServlet</servlet-name>
     <servlet-class>ru.job4j.cars.servlet.GetAllEnginesServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>GetAllDrivetrainsServlet</servlet-name>
+    <servlet-class>ru.job4j.cars.servlet.GetAllDriveTrainsServlet</servlet-class>
   </servlet>
 
   <servlet>
@@ -109,6 +109,11 @@
   <servlet-mapping>
     <servlet-name>GetAllEnginesServlet</servlet-name>
     <url-pattern>/engines</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>GetAllDrivetrainsServlet</servlet-name>
+    <url-pattern>/drivetrains</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

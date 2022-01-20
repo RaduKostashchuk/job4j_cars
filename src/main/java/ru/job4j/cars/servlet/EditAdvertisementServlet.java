@@ -1,7 +1,7 @@
 package ru.job4j.cars.servlet;
 
 import ru.job4j.cars.models.*;
-import ru.job4j.cars.store.HbmStore;
+import ru.job4j.cars.store.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,29 +19,46 @@ public class EditAdvertisementServlet extends HttpServlet {
         int modelId = Integer.parseInt(req.getParameter("model"));
         int bodyId = Integer.parseInt(req.getParameter("body"));
         int engineId = Integer.parseInt(req.getParameter("engine"));
-        Advertisement advertisement = HbmStore.getInstance().getAdvertisementById(advId);
+        int drivetrainId = Integer.parseInt(req.getParameter("drivetrain"));
+        String year = req.getParameter("year");
+        String mileage = req.getParameter("mileage");
+        String price = req.getParameter("price");
+        Advertisement advertisement = AdvertisementStore.getAdvertisementById(advId);
+        if (!year.isEmpty()) {
+            advertisement.getCar().setYear(Integer.parseInt(year));
+        }
+        if (!mileage.isEmpty()) {
+            advertisement.getCar().setMileage(Integer.parseInt(mileage));
+        }
+        if (!price.isEmpty()) {
+            advertisement.setPrice(Integer.parseInt(price));
+        }
         if (brandId != 0) {
-            Brand brand = HbmStore.getInstance().getBrandById(brandId);
+            Brand brand = BrandStore.getBrandById(brandId);
             advertisement.getCar().setBrand(brand);
         }
         if (modelId != 0) {
-            Model model = HbmStore.getInstance().getModelById(modelId);
+            Model model = ModelStore.getModelById(modelId);
             advertisement.getCar().setModel(model);
         }
         if (bodyId != 0) {
-            Body body = HbmStore.getInstance().getBodyById(bodyId);
+            Body body = BodyStore.getBodyById(bodyId);
             advertisement.getCar().setBody(body);
         }
         if (engineId != 0) {
-            Engine engine = HbmStore.getInstance().getEngineById(engineId);
+            Engine engine = EngineStore.getEngineById(engineId);
             advertisement.getCar().setEngine(engine);
+        }
+        if (drivetrainId != 0) {
+            Drivetrain drivetrain = DriveTrainStore.getDrivetrainById(drivetrainId);
+            advertisement.getCar().setDrivetrain(drivetrain);
         }
         if (!description.equals("")) {
             advertisement.setDescription(description);
         }
         advertisement.setId(advId);
         advertisement.setSold(sold);
-        HbmStore.getInstance().updateAdvertisement(advertisement);
+        AdvertisementStore.updateAdvertisement(advertisement);
         resp.sendRedirect("edit.jsp?id=" + req.getParameter("id"));
     }
 }

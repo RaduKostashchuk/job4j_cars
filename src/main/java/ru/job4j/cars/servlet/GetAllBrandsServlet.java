@@ -3,7 +3,7 @@ package ru.job4j.cars.servlet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.job4j.cars.models.Brand;
-import ru.job4j.cars.store.HbmStore;
+import ru.job4j.cars.store.BrandStore;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ public class GetAllBrandsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        List<Brand> brands = HbmStore.getInstance().getAllBrands();
+        List<Brand> brands = BrandStore.getAllBrands();
         String json = GSON.toJson(brands);
         OutputStream out = resp.getOutputStream();
         out.write(json.getBytes(StandardCharsets.UTF_8));

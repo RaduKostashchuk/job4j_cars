@@ -1,7 +1,7 @@
 package ru.job4j.cars.servlet;
 
 import ru.job4j.cars.models.Driver;
-import ru.job4j.cars.store.HbmStore;
+import ru.job4j.cars.store.DriverStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +16,7 @@ public class AuthServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        Driver driver = HbmStore.getInstance().findDriverByEmail(email);
+        Driver driver = DriverStore.findDriverByEmail(email);
         if (driver != null && driver.getPassword().equals(password)) {
             HttpSession session = req.getSession();
             session.setAttribute("driver", driver);

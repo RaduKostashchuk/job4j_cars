@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Объявления</title>
 
+    <link href="css/index.css" rel="stylesheet" />
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous">
@@ -27,90 +29,92 @@
             + ":" + "<%=request.getServerPort()%>"
             + "<%=request.getServletContext().getContextPath()%>";
     </script>
-    <script src="js/index.js?version=8"></script>
+    <script src="js/lib.js?version=3"></script>
+    <script src="js/index.js?version=3"></script>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <c:if test="${driver != null}">
-        <div class="col-2">
-            <ul class="nav justify-content-start">
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/edit.jsp">
-                        Добавить объявление
-                    </a>
-                </li>
-            </ul>
+    <div class="my-navbar bg-info">
+        <div class="row">
+            <div class="col-4">
+                <p class="h5 text-center m-2">Autosale.ru</p>
+            </div>
+            <c:if test="${driver != null}">
+            <div class="col-2 offset-4">
+                <a class="btn btn-primary m-1" href="<%=request.getContextPath()%>/edit.jsp">
+                    Добавить объявление
+                </a>
+            </div>
+            <div class="col-2">
+                <a class="btn btn-primary m-1" href="<%=request.getContextPath()%>/logout">
+                    <c:out value="${driver.name}"/> | Выйти
+                </a>
+            </div>
+            </c:if>
+            <c:if test="${driver == null}">
+            <div class="col-2 offset-4">
+                <a class="btn btn-primary disabled m-1" href="<%=request.getContextPath()%>/edit.jsp" >
+                    Добавить объявление
+                </a>
+            </div>
+            <div class="col-2">
+                <a class="btn btn-primary m-1" href="<%=request.getContextPath()%>/login.jsp">
+                    Войти
+                </a>
+            </div>
+            </c:if>
         </div>
-        <div class="col-3 offset-7">
-            <ul class="nav justify-content-end">
-                <li class="nav-item">
-                        <a class="nav-link" href="<%=request.getContextPath()%>/logout">
-                            <c:out value="${driver.name}"/> | Выйти
-                        </a>
-                </li>
-            </ul>
-        </div>
-        </c:if>
-        <c:if test="${driver == null}">
-        <div class="col-2 offset-10">
-            <ul class="nav justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">
-                        Войти
-                    </a>
-                </li>
-            </ul>
-        </div>
-        </c:if>
     </div>
 
-    <div class="card">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-4">
-                    <p class="h5">Объявления</p>
-                </div>
+    <div class="sidebar">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <p class="h6 text-center m-1">Фильтры</p>
+            </li>
+            <li class="list-group-item">
                 <c:if test="${driver != null}">
-                    <div class="col-2 offset-4">
-                        <input class="form-check-input" type="checkbox" id="myCheck" onchange="drawTable()">
-                        <label class="form-check-label" for="myCheck">
-                            Показать мои
-                        </label>
-                    </div>
-
-                    <div class="col-2">
-                        <input class="form-check-input" type="checkbox" id="allCheck" onchange="drawTable()">
-                        <label class="form-check-label" for="allCheck">
-                            Показать проданные
-                        </label>
-                    </div>
+                <input class="form-check-input" type="checkbox" id="myCheck" onchange="queryBack()">
                 </c:if>
                 <c:if test="${driver == null}">
-                    <div class="col-2 offset-6">
-                        <input class="form-check-input" type="checkbox" id="allCheck" onchange="drawTable()">
-                        <label class="form-check-label" for="allCheck">
-                            Показать проданные
-                        </label>
-                    </div>
+                <input class="form-check-input" type="checkbox" id="myCheck" onchange="queryBack()" disabled>
                 </c:if>
+                <label class="form-check-label" for="myCheck">
+                    Показать мои
+                </label>
+            </li>
+            <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" id="allCheck" onchange="queryBack()">
+                <label class="form-check-label" for="allCheck">
+                    Отображать проданные
+                </label>
+            </li>
+            <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" id="photoCheck" onchange="queryBack()">
+                <label class="form-check-label" for="photoCheck">
+                    С фото
+                </label>
+            </li>
+            <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" id="lastDayCheck" onchange="queryBack()">
+                <label class="form-check-label" for="lastDayCheck">
+                    За последние сутки
+                </label>
+            </li>
+            <li class="list-group-item">
+                <select class="custom-select" id="brandSelect" name="brand" onchange="queryBack()">
+                    <option value="0" selected>Все марки</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="row">
+            <div class="col-10">
+                <table class="table table-borderless table-striped table-hover">
+                    <tbody id="mainTableBody">
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="card-body form-group">
-            <table class="table table-bordered">
-                <thead class="table-light">
-                <tr>
-                    <th>Фото</th>
-                    <th>Марка</th>
-                    <th>Модель</th>
-                    <th>Статус</th>
-                </tr>
-                </thead>
-                <tbody id="mainTableBody">
-                </tbody>
-            </table>
-        </div>
     </div>
-</div>
 </body>
 </html>
