@@ -1,41 +1,42 @@
 # job4j_cars
+## О проекте
 
-It is an application for a car sale company.
+Это приложение - площадка продаж автомобилей.
 
-Unregistered user can view all advertisements and detailed description of each one.
+Незарегистрированные пользователи имеют возможность просматривать все объявления.
 
-Registered user has the same options as unregistered plus he can add new advertisements
+Зарегистрированные пользователи  могут добавлять, редактировать и удалять свои объявления.
 
-and edit his own ones added earlier.
-
-Login page.
-
-![ScreenShot](images/login.png)
-
-Registration page.
-
-![ScreenShot](images/reg.png)
-
-Main page for unregistered user.
-
-![ScreenShot](images/index_anonymous.png)
-
-Detail page for some advertisement for unregistered user.
-
-![ScreenShot](images/detail_anonymous.png)
-
-Main page for logged user.
+## Обзор
+Главная страница.
 
 ![ScreenShot](images/index_logged.png)
 
-Detail page for logged user for some advertisement of another user.
+Страница объявления.
 
-![ScreenShot](images/detail_foreign.png)
+![ScreenShot](images/detail_anonymous.png)
 
-Advertisement add page.
+Страница добавления объявления.
 
 ![ScreenShot](images/add.png)
 
-Advertisement edit page.
+Страница редактирования объявления.
 
 ![ScreenShot](images/edit.png)
+
+## Настройка и сборка
+
+У приложения два файла конфигурации: /src/main/resources/hibernate.cfg.xml и
+
+/src/main/resources/cars.properties, в первом необходимо указать настройки Hibernate, во втором
+
+путь к директории, куда будут сохраняться фотографии автомобилей.
+
+Сборка осуществляется командой: mvn package.
+
+После сборки приложение нужно развернуть в контейнере сервлетов и настроить сервер баз данных.
+
+## Контакты
+
+Email: kostasc@mail.ru
+Telegram: @rkostashchuk
